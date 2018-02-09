@@ -1,0 +1,59 @@
+<div class="search-page">
+  <mat-card [class.has-query]="queryTerm" [class.no-query]="!queryTerm">
+    <a [routerLink]="'/'">
+      <img src="../../assets/img/logo.png" alt="Logo" class="logo">
+    </a>
+    <form [formGroup]="searchForm" (submit)="search()">
+      <mat-form-field>
+        <input type="text" #queryInput formControlName="query" placeholder="Search query" matInput/>
+      </mat-form-field>
+      <button mat-icon-button class="clear-button" (click)="clearForm()">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button type="submit" mat-icon-button class="search-button" [disabled]="loading || !query">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+    <button *ngIf="queryTerm" mat-button class="filter-button" [disabled]="loading || !query" (click)="filter()">
+      <mat-icon>filter_list</mat-icon>
+      Filter
+    </button>
+  </mat-card>
+
+  <div class="no-results" *ngIf="hasNoResults">
+    <span class="has-error" *ngIf="hasError">
+      We encountered an error while trying to retrieve results for <strong>{{queryTerm}}</strong>
+    </span>
+    <span class="has-error" *ngIf="!hasError">
+      No results found for <strong>{{queryTerm}}</strong>
+    </span>
+  </div>
+
+  <div class="has-results" *ngIf="hasResults">
+    <mat-card *ngFor="let result of results">
+      <img mat-card-image [src]="result.thumb" [alt]="result.name" class="thumb">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title class="title">{{result.name}}</mat-card-title>
+          <mat-card-subtitle>Modified at: {{result.modified}}</mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content class="content">
+        <p><strong>Keywords:</strong> {{result.keywords}}</p>
+        <p><strong>Format:</strong> {{result.format}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <button mat-button class="more-button" *ngIf="showLoadMore" (click)="fetchResults()">
+    Load more results...
+  </button>
+
+  <mat-progress-spinner *ngIf="loading"
+                        [diameter]="50"
+                        [strokeWidth]="3"
+                        mode="indeterminate">
+  </mat-progress-spinner>
+
+
+</div>

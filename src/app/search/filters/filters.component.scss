@@ -1,0 +1,31 @@
+mat-dialog-content {
+  mat-card-header {
+    font-weight: bold;
+  }
+
+  mat-card-content {
+    padding: 10px 0;
+    mat-checkbox {
+      display: block;
+      padding: 10px 0;
+    }
+  }
+}
+
+mat-dialog-actions {
+  justify-content: center;
+
+  .cancel-button {
+    background-color: #a23228;
+    color: white;
+  }
+
+  .filter-button {
+    background-color: steelblue;
+    color: white;
+  }
+}
+
+/deep/ .cdk-overlay-pane {
+  max-width: 300px !important;
+}
